@@ -1,0 +1,21 @@
+
+
+@media (max-width: 1200px) {
+  .moodscope-sidebar {
+    width: 200px;
+    min-width: 120px;
+  }
+}
+@media (max-width: 900px) {
+  .moodscope-main-layout {
+    flex-direction: column;
+  }
+  .moodscope-sidebar {
+    width: 100vw;
+    min-width: 0;
+    border: none;
+  }
+  .moodscope-sidebar.right {
+    border: none;
+  }
+}

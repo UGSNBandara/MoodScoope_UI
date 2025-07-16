@@ -1,0 +1,80 @@
+/*
+ * SideMenu.css - Refined Layout with Static Header/Footer
+ *
+ * This file styles the side menu, ensuring 'Today's Specials' header
+ * and 'See all list' button remain fixed, while the ice cream cards
+ * list scrolls independently.
+ */
+
+/* Main container for the entire side menu */
+.side-menu-container {
+  display: flex;
+  flex-direction: column; /* Stacks header, content, and footer vertically */
+  height: 100%; /* **CRUCIAL:** Makes the container fill its parent's height */
+  min-height: 0; /* Ensures flex item can shrink without overflowing */
+  background: transparent; /* Set to match your overall sidebar background */
+  padding: 18px; /* Overall padding for the menu content */
+  box-sizing: border-box; /* Include padding in height calculations */
+}
+
+/* Header for "Today's Specials" */
+.side-menu-header {
+  padding-bottom: 15px; /* Space below the header text */
+  flex-shrink: 0; /* Prevents this section from shrinking when space is tight */
+  text-align: center; /* Center the heading text */
+  color: #334155; /* Darker, modern text color */
+  font-size: 1.4rem; /* Larger font size for emphasis */
+  font-weight: 700;
+  border-bottom: 1px solid #e2e8f0; /* Subtle separator line */
+  margin-bottom: 15px; /* Space between header and scrollable content */
+}
+
+.side-menu-header h2 {
+  margin: 0; /* Remove default h2 margin */
+  padding: 0;
+}
+
+/* Scrollable content area for Ice Cream Cards */
+.side-menu-scrollable-content {
+  flex-grow: 1; /* **CRUCIAL:** This element takes all available vertical space */
+  overflow-y: auto; /* **CRUCIAL:** Enables vertical scrolling only for this div */
+  padding-right: 10px; /* Provides space for the scrollbar so content isn't under it */
+  padding-bottom: 10px; /* Space before the footer section */
+  min-height: 0; /* **CRUCIAL:** Allows flex item to shrink and enables overflow */
+
+  /* Styles to hide the scrollbar (keeps functionality but makes it invisible) */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.side-menu-scrollable-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Footer with "See all list" button */
+.side-menu-footer {
+  padding-top: 15px; /* Space above the button */
+  flex-shrink: 0; /* Prevents this section from shrinking */
+  text-align: center; /* Center the button */
+  border-top: 1px solid #e2e8f0; /* Subtle separator line */
+  margin-top: 15px; /* Space between scrollable content and footer */
+}
+
+.view-all-button {
+  background: linear-gradient(45deg, #667eea, #764ba2); /* Standard blue button */
+  color: white;
+  border: none;
+  border-radius: 8px; /* Slightly rounded corners */
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  width: 80%; /* Button takes most of the width, adjust as needed */
+  max-width: 250px; /* Max width for larger screens to prevent it from being too wide */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.view-all-button:hover {
+  background: linear-gradient(45deg, #764ba2, #667eea);/* Darker blue on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly more pronounced shadow */
+}

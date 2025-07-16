@@ -1,0 +1,41 @@
+body, html, #root, .moodscope-app-root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #7bdae5;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .moodscope-app-root {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .moodscope-main-layout {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 70px);
+    min-height: 0;
+  }
+  
+  .moodscope-sidebar {
+    width: 500px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .moodscope-center {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: transparent;
+    justify-content: stretch;
+  }
