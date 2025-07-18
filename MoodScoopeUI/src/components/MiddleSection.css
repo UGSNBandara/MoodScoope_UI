@@ -18,19 +18,32 @@
 }
 
 .agent-display {
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 800px;
-  width: 750px;
-  overflow: hidden;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 800px;
+    width: 750px;
+    overflow: hidden;
+    position: relative;
 }
 
 .agent-img {
-  width: auto;
-  height: 100%;
-  object-fit: contain;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1s ease;  
+}
+
+.agent-img.active-video {
+    z-index: 1;
+}
+
+.agent-img.next-video {
+    z-index: 2; 
 }
 
 .order-details {
