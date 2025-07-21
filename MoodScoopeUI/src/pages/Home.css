@@ -1,11 +1,11 @@
 body, html, #root, .moodscope-app-root {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background: #7bdae5;
-    font-family: 'Inter', sans-serif;
-  }
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(90deg, #4d9cbe, #92d7f4); /* Corrected line */
+  font-family: 'Inter', sans-serif;
+}
   
   .moodscope-app-root {
     min-height: 100vh;
@@ -24,7 +24,7 @@ body, html, #root, .moodscope-app-root {
   }
   
   .moodscope-sidebar {
-    width: 500px;
+    width: 600px;
     background: transparent;
     display: flex;
     flex-direction: column;

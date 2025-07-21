@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './MiddleSection.css';
-import videoListening from "../assets/animatedVideo/listning_1.mp4";
-import videoTalking from "../assets/animatedVideo/talking_1.mp4";
-import videoThinking from "../assets/animatedVideo/thinking_1.mp4";
-import poster from "../assets/image.png";
+import videoListening from "../assets/animatedVideo/waiting.mp4";
+import videoTalking from "../assets/animatedVideo/talking.mp4";
+import videoThinking from "../assets/animatedVideo/relaxing.mp4";
+import poster from "../assets/agent3.jpg";
 
 const VIDEO_THINKING = 0;
 const VIDEO_LISTENING = 1;
@@ -194,7 +194,7 @@ const ChatInterface = ({ setVideoIndex, videoIndex }) => {
             if (typingTimeoutRef.current) {
                 clearTimeout(typingTimeoutRef.current);
             }
-            setVideoIndex(VIDEO_THINKING);
+            //setVideoIndex(VIDEO_THINKING);
 
             const userMessage = {
                 id: messages.length + 1,
