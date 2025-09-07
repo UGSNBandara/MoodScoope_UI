@@ -1,0 +1,35 @@
+/* Full-screen centered loading overlay for global use */
+.loading-overlay {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  z-index: 9999; /* top layer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* let clicks pass through */
+}
+.loading-dots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  background: rgba(0,0,0,0.45);
+  border-radius: 24px;
+}
+.loading-dots span {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.95;
+  transform: translateY(0);
+  animation: dot 0.9s infinite ease-in-out;
+}
+.loading-dots span:nth-child(2) { animation-delay: 0.15s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}

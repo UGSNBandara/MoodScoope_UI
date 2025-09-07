@@ -1,5 +1,5 @@
 import React from 'react';
-import './MiddleSection.css';
+import './LoadingOverlay.css';
 
 const LoadingOverlay = () => (
   <div className="loading-overlay" aria-hidden>

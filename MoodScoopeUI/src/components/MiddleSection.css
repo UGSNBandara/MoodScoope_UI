@@ -1,20 +1,24 @@
 .middle-section-grid {
   display: grid;
-  grid-template-columns: 60% 40%;
-  gap: 18px;
+  /* fixed agent column, constrained right column for order + chat */
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 460px);
+  gap: 110px;
   height: 100%;
   margin: 15px 18px;
   min-height: 0;
   box-sizing: border-box;
+  align-items: start; /* align both columns at top */
 }
 
 .left-column-content {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  height: 100%;
+  gap: 10px;
+  /* match agent height so child areas can be sized relative to it */
+  height: 800px;
   min-height: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .agent-display {
@@ -23,7 +27,7 @@
     align-items: center;
     justify-content: center;
     height: 800px;
-    width: 750px;
+    width: clamp(420px, 52vw, 750px);
     overflow: hidden;
     position: relative;
 }
@@ -54,8 +58,9 @@
   flex-direction: column;
   flex-shrink: 0;
   min-height: 0;
-  height: 200px;
+  height: 250px;
   box-sizing: border-box;
+  width: 100%; /* fill the right column width (same as chat interface) */
 }
 
 .order-details h3 {
@@ -74,11 +79,15 @@
 .chat-interface-fixed {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  /* take the remaining height after order-details (explicit relative to agent height) */
+  height: calc(800px - 250px);
   min-height: 0;
   background: rgba(255, 255, 255, 0.074);
   border-radius: 10px;
   overflow: hidden;
+  width: 100%; /* fill the right column width (same as order-details) */
+  flex-shrink: 0;
+
 }
 
 .chat-messages-scroll {
@@ -91,6 +100,15 @@
   background: rgba(255, 255, 255, 0.074);
   min-height: 0;
   scroll-behavior: smooth;
+  /* hide scrollbar but keep scrolling functional */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.chat-messages-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0;
+  height: 0;
 }
 
 .chat-input-area {
@@ -150,12 +168,13 @@
 }
 
 .message-bubble {
-  max-width: 78%;
+  max-width: 100%;
   padding: 12px 18px;
   border-radius: 20px;
   font-size: 1rem;
   line-height: 1.5;
   word-break: break-word;
+  overflow-wrap: anywhere; /* force wrap on long words/URLs to avoid expanding container */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
@@ -227,37 +246,4 @@
 }
 
 /* Loading overlay (3 dots) */
-.loading-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 60;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-.loading-dots {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 18px;
-  background: rgba(0,0,0,0.45);
-  border-radius: 24px;
-}
-.loading-dots span {
-  width: 14px;
-  height: 14px;
-  background: #fff;
-  border-radius: 50%;
-  opacity: 0.95;
-  transform: translateY(0);
-  animation: dot 0.9s infinite ease-in-out;
-}
-.loading-dots span:nth-child(2) { animation-delay: 0.15s; }
-.loading-dots span:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes dot {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-  30% { transform: translateY(-6px); opacity: 1; }
-}
+/* loading overlay moved to LoadingOverlay.css */

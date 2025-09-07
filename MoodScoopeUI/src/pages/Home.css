@@ -24,7 +24,7 @@ body, html, #root, .moodscope-app-root {
   }
   
   .moodscope-sidebar {
-    width: 600px;
+    width: 40%;
     background: transparent;
     display: flex;
     flex-direction: column;
