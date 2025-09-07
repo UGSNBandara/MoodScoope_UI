@@ -12,6 +12,14 @@ export const MoodProvider = ({ children }) => {
   const idleTimerRef = useRef(null);
   const [sessionId, setSessionId] = useState(null);
   const [userId, setUserId] = useState('u1');
+  // selectedCategory is shared so components (chat/agent) can control the sidebar
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  // jumpTarget is used to ask the UI to jump to a specific item (categoryIndex, itemIndex)
+  const [jumpTarget, setJumpTarget] = useState(null);
+
+  const jumpToItem = (categoryIndex, itemIndex) => {
+    setJumpTarget({ categoryIndex, itemIndex });
+  };
 
   useEffect(() => {
     // ensure idle timer is set on mount to transition to THINKING after inactivity
@@ -76,6 +84,31 @@ export const MoodProvider = ({ children }) => {
       // append agent message text
       setMessages((prev) => [...prev, { id: Date.now() + 1, text: respText, sender: 'agent' }]);
 
+      // --- NEW: call menu index endpoint once after receiving agent response ---
+      try {
+        const sid = data.session_id || sessionId;
+        if (sid) {
+          const menuRes = await fetch(`http://127.0.0.1:8000/menu/index/${sid}`, { method: 'GET', headers: { Accept: 'application/json' } });
+          if (menuRes.ok) {
+            const menuData = await menuRes.json();
+            const raw = typeof menuData.index === 'number' ? menuData.index : parseInt(menuData.index);
+            // backend uses 1-based indexing; convert to 0-based for frontend
+            let idx = Number.isFinite(raw) ? raw - 1 : NaN;
+            if (Number.isNaN(idx) || idx < 0) idx = 0;
+            // use ice cream index 3 as requested
+            const iceIndex = 3;
+            if (!Number.isNaN(idx) && idx !== selectedCategory) {
+              // ask UI to jump to the requested category and item
+              jumpToItem(idx, iceIndex);
+            }
+          } else {
+            console.warn('menu index fetch failed', menuRes.status);
+          }
+        }
+      } catch (err) {
+        console.error('menu index fetch error:', err);
+      }
+
       let audioUrl = null;
       if (data.audio_base64) {
         const mime = data.audio_mime || 'audio/mpeg';
@@ -96,7 +129,7 @@ export const MoodProvider = ({ children }) => {
   }
 
   return (
-    <MoodContext.Provider value={{ videoIndex, setVideoIndex, messages, setMessages, isLoading, sendUserMessage, sessionId, setSessionId, userId, setUserId }}>
+  <MoodContext.Provider value={{ videoIndex, setVideoIndex, messages, setMessages, isLoading, sendUserMessage, sessionId, setSessionId, userId, setUserId, selectedCategory, setSelectedCategory, jumpTarget, setJumpTarget, jumpToItem }}>
       {children}
     </MoodContext.Provider>
   );

@@ -1,13 +1,42 @@
 .icecream-card {
-  background: #e0f7fa;
+  /* outer shell: transparent so the halo pseudo-element sits behind the inner card */
+  background: transparent;
   border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  overflow: visible;
+  position: relative;
   width: 100%;
   max-width: 340px;
   margin: 0 auto 24px auto;
   display: flex;
   flex-direction: column;
+}
+
+.icecream-card-inner {
+  background: #e0f7fa;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1; /* ensure inner card renders above the halo */
+}
+
+/* DOM halo element that sits behind the inner card to render a white glow */
+.icecream-halo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: calc(100% + 48px);
+  height: calc(100% + 48px);
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 0; /* behind inner card (inner card renders above) */
+  opacity: 0;
+  filter: blur(22px);
+  background: radial-gradient(circle at center, rgba(255,255,255,0.95), rgba(255,255,255,0.6) 40%, rgba(255,255,255,0) 68%);
 }
 
 .icecream-card-image {

@@ -15,6 +15,8 @@
   background: transparent; /* Set to match your overall sidebar background */
   padding: 18px; /* Overall padding for the menu content */
   box-sizing: border-box; /* Include padding in height calculations */
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 /* Header for "Today's Specials" */
@@ -51,30 +53,141 @@
   display: none; /* Chrome, Safari, Opera */
 }
 
-/* Footer with "See all list" button */
-.side-menu-footer {
-  padding-top: 15px; /* Space above the button */
-  flex-shrink: 0; /* Prevents this section from shrinking */
-  text-align: center; /* Center the button */
-  border-top: 1px solid #e2e8f0; /* Subtle separator line */
-  margin-top: 15px; /* Space between scrollable content and footer */
+/* Category list styles */
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
-.view-all-button {
-  background: linear-gradient(45deg, #667eea, #764ba2); /* Standard blue button */
-  color: white;
-  border: none;
-  border-radius: 8px; /* Slightly rounded corners */
-  padding: 12px 20px;
-  font-size: 1rem;
+.category-card {
+  display: block;
+  text-align: left;
+  background: rgba(255,255,255,0.02);
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  width: 80%; /* Button takes most of the width, adjust as needed */
-  max-width: 250px; /* Max width for larger screens to prevent it from being too wide */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+.category-card:hover { border-color: rgba(255,255,255,0.06); }
+.category-card.active { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+.category-card-title { font-weight: 700; color: #eef; }
+.category-card-desc { color: #cbd5e0; font-size: 0.9rem; margin-top: 6px; }
+
+/* Menu button variant used in the side menu header. Matches send-button hover/active colors
+   but uses a larger font and smaller radius so it appears like a header control. */
+.menu-button {
+  padding: 8px 30px;
+  border-radius: 6px; /* lower radius than send-button */
+  background: transparent; /* default - shows as a header control */
+  background: linear-gradient(45deg, #764ba2, #667eea);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+  border: none;
+  font-weight: 700;
+  font-size: 1.4rem; /* h2-like size */
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.menu-button {
+  padding: 6px 12px;
+  border-radius: 6px; /* lower radius than send-button */
+  background: transparent; /* default - shows as a header control */
+  color: #eef;
+  border: none;
+  font-weight: 700;
+  font-size: 1.4rem; /* h2-like size */
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
-.view-all-button:hover {
-  background: linear-gradient(45deg, #764ba2, #667eea);/* Darker blue on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly more pronounced shadow */
+/* Active modifier: show colored gradient and hover/active effects only when active */
+.menu-button--active {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
 }
+.menu-button--active:hover {
+  background: linear-gradient(45deg, #764ba2, #667eea);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+  transform: translateY(-1px);
+}
+.menu-button--active:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+/* Slide animations used when switching between categories and items */
+.slide-container {
+  will-change: transform, opacity;
+}
+.slide-out {
+  animation: slideOut 220ms cubic-bezier(.22,.9,.2,1) forwards;
+}
+.slide-in {
+  animation: slideIn 300ms cubic-bezier(.22,.9,.2,1) forwards;
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(-24px); opacity: 0; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(24px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* vertical bounce when switching category: content moves down slightly then back up */
+@keyframes bounceDown {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(18px); }
+  100% { transform: translateY(0); }
+}
+
+/* pop animation for individual item cards */
+@keyframes pop {
+  0% { transform: scale(0.96); opacity: 0.85; }
+  50% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.bounce-down {
+  animation: bounceDown 420ms cubic-bezier(.22,.9,.2,1) forwards;
+}
+
+.icecream-card .icecream-halo {
+  /* default: no visible halo (DOM element) */
+  opacity: 0;
+  transition: opacity 220ms linear;
+}
+
+.icecream-card.pop .icecream-halo {
+  /* animate halo pulse to match pop duration */
+  animation: haloPulse 1400ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+/* apply elevated white shadow to the inner card when popped so the white halo sits visibly behind it */
+.icecream-card.pop .icecream-card-inner {
+  box-shadow: 0 22px 48px rgba(255,255,255,0.36), 0 8px 22px rgba(34,43,76,0.12);
+  animation: pop 1400ms cubic-bezier(.2,.9,.2,1) forwards;
+  transform-origin: center center;
+}
+
+
+@keyframes haloPulse {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  40% {
+    opacity: 0.98;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+}
+
+

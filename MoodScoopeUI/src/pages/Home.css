@@ -28,7 +28,10 @@ body, html, #root, .moodscope-app-root {
     background: transparent;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+  /* allow inner flex children to control scrolling */
+  overflow: hidden;
+  min-height: 0; /* important so flex children with overflow can shrink */
+  height: 100%;
   }
 
   .moodscope-center {
